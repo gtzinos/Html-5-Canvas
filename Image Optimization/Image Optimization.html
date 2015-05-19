@@ -1,0 +1,39 @@
+<html>
+  <head>
+    <script>
+      var myContext , myCanvas;
+      var fps = 100;
+      var i = 0;
+      var spaceship = new Image();
+      window.onload=function(){
+        myCanvas = document.getElementById("canvas");
+        myContext = myCanvas.getContext("2d");
+        spaceship.src = "rocket.png";
+        loop();
+      }
+
+      function loop(){
+          setInterval	(function(){
+          i++;
+          myContext.clearRect(0,0,500,500);
+          myContext.drawImage(spaceship,-180,500-i);
+          addNoise(0.5);
+        },1000/fps)
+      }
+
+      function addNoise(alpha) {
+        var imageData = myContext.getImageData(0, 0, 500, 500);
+        var pixels = imageData.data;
+        var alpha1 = 1 - alpha;
+
+        for (var i = 0, il = pixels.length; i < il; i += 4) {
+          pixels[i] = pixels[i] * (Math.random() * alpha + alpha1);
+        }
+        myContext.putImageData(imageData, 0, 0);
+      }
+    </script>
+  </head>
+  <body>
+    <canvas style="border:5px dotted black;" id="canvas" width="500px" height="500px"></canvas>
+  </body>
+</html>
