@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<canvas id="canvas" width="500" height="500" style="border:1px solid #d3d3d3;">
+Your browser does not support the HTML5 canvas tag.</canvas>
+
+<script>
+//ftiaxno 3 image gia ta 3 antikeimena moy.ilios/ fegari/gi
+var sun = new Image(); 
+var moon = new Image();
+var earth = new Image();
+window.onload = function() { //window onload event
+	//theto eikones gia to kathe variable
+  sun.src = 'https://mdn.mozillademos.org/files/1456/Canvas_sun.png'; 
+  moon.src = 'https://mdn.mozillademos.org/files/1443/Canvas_moon.png';
+  earth.src = 'https://mdn.mozillademos.org/files/1429/Canvas_earth.png';
+  draw(); //kai ksekinaw na zografizw
+}
+
+function draw() {
+setTimeout(function() { //ksekiname me setTimeout anonymous
+  var ctx = document.getElementById('canvas').getContext('2d'); //pernw to context to kamva gia na zografisw
+//dinoyme to tropo poy tha zografistei mia eikona panw se mia alli.px i gi sto diastima ktlp
+//perissoteres plirofories sto link  http://www.w3schools.com/tags/canvas_globalcompositeoperation.asp
+  ctx.globalCompositeOperation = 'destination-over';  
+  ctx.clearRect(0,0,300,300); // clear canvas se aspro oxi omws oloklhro to kamba alla to meros pou mas endiaferei
+
+  ctx.fillStyle = 'rgba(0,0,0,0.4)';  //dilwnw to fill style se gri gia to epomeno fillrect pou tha ginei
+  ctx.strokeStyle = 'rgba(0,153,255,0.4)'; //zografizw perigramma
+  ctx.save(); //save context
+  ctx.translate(150,150); //x=150 y=150 sintetagmenes gia epomeno draw opou kai einai to earth
+
+  // Earth algorith edw sthn ousia einai enas algorithmos gia na girnane ola akribos opws kai sthn pragmatikotita
+  //i gi giro apo to ilio px
+  var time = new Date(); 
+  ctx.rotate( ((2*Math.PI)/60)*time.getSeconds() + ((2*Math.PI)/60000)*time.getMilliseconds() );
+  ctx.translate(105,0); //to epomeno draw tha ginei x=105 y=0
+  ctx.fillRect(0,-12,50,24); // skia
+  ctx.drawImage(earth,-12,-12); //zografizw thn gi ston kamba
+
+  // Moon
+  ctx.save(); //save to context
+  ctx.rotate( ((2*Math.PI)/6)*time.getSeconds() + ((2*Math.PI)/6000)*time.getMilliseconds() ); //algorithmos peristrofis gia to fegari
+  ctx.translate(0,28.5); //to epomeno draw tha ginei x=0 y=28.5
+  ctx.drawImage(moon,-3.5,-3.5); //zografizw to fegari sto kamba
+  ctx.restore();//epistrefei ta saved path kai attributes
+
+  ctx.restore(); //epistrefei ta saved path kai attributes
+  
+  ctx.beginPath(); //ksekinaei ena path h kanei reset
+  ctx.arc(150,150,105,0,Math.PI*2,false); // Earth orbit
+  ctx.stroke(); //zografizw
+ 
+  ctx.drawImage(sun,0,0,300,300); //zografizw kai ton ilio pleon
+	draw(); //kai epanalambanw thn diadikasia ep apeirou
+	},1000/100) //1000/100 frames per second
+ } 
+  </script>
+  </body>
+  </html>
