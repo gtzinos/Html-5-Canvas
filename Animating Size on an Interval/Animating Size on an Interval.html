@@ -1,0 +1,46 @@
+<html>
+	<head>
+		<script>
+			var myContext , myCanvas;
+			var fps = 120;
+			window.onload=function(){
+			myCanvas = document.getElementById("canvas");
+			myContext = myCanvas.getContext("2d");
+			loop();
+			}
+			var i = 0;
+			var s1=50;
+			var s2=20;
+			var a1=60;
+			var a2=200;
+
+			function loop(){
+				setInterval	(function(){
+				i++;
+				myContext.beginPath();
+
+				myContext.clearRect(0,0,500,500);
+
+				myContext.fillStyle="red";
+				if(i <a1){
+
+					myContext.arc(i,i,s1,0,Math.PI*2,true);
+
+				}
+				else if(i<a1+a2){
+				myContext.arc(i,i,s1 - ((s1-s2)/a2)*(i-a1),0,Math.PI*2,true);
+				}
+				else{
+					myContext.arc(i,i,s2,0,Math.PI*2,true);
+				}
+				myContext.closePath();
+				myContext.fill();
+
+			},1000/fps)
+			}
+		</script>
+	</head>
+	<body>
+		<canvas style="border:5px dotted black;" id="canvas" width="500px" height="500px"></canvas>
+	</body>
+</html>
