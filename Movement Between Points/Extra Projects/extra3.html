@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<canvas id="myCanvas" width="500" height="500" style="border:1px solid #d3d3d3;">
+Your browser does not support the HTML5 canvas tag.</canvas>
+
+<script>
+var c,canvas;
+	
+	var fps=80; //dilwnw ta fps
+	window.onload=function() { //molis to window oloklhro ginei load
+		canvas=document.getElementById("myCanvas");//pernoume ton canva
+		ctx=canvas.getContext("2d");//pernoyme to context diladi to simeio poy mporoume na zografisoume
+		
+		
+		
+		loop(); //kalw thn loop
+	}
+
+	var x=20; //arxikopoihsh
+	var y=0; //arxikopoihsh
+	var z=0; //arxikopoihsh
+	var e=0; //arxikopoihsh
+	function loop() {
+		setTimeout(function() {
+			
+			ctx.fillStyle = "black"; //gemizw to background me xrwma mauro
+			ctx.fillRect(0, 0, 500, 500); //zografizei oloklhro me xroma fillstyle ena meros tou canva sthn sigekrimenh maurizei ton canva olo
+			
+			
+			// exoume kai leme an to x < 400 paei na pei de eftase sthn deksia gonia.dioti 100 to platos tou sximatos mas
+			// 500 canvas width - 100 sxima mas width = 400
+			//ara oso x < 400 akoma pigenei deksia opote auksanoyme to x kai dinw kathe fora to z=x gia na sinexisei epeita
+			if(x < 400) { 
+				x++;
+				z=x;
+				ctx.clearRect(x, y, 100, 50);
+			}
+			else if(y < 450) { //otan ftasei sto 400 pleon pianei topo to y.oso y < 450 ayto paei pros to katw, dioti canvas height = 500 - 50 sxima mas height = 450
+				y++;
+				e=y;
+				ctx.clearRect(z, e, 100, 50);
+			}
+			else if(z >= 0){ //otan ftasei kai katw toe pame sto z opou twra to meiwnw  apo 400 pou einai gia oso einai >= 0 etsi oste na paei aristera
+				z--;
+				ctx.clearRect(z, y, 100, 50);
+			
+			}
+			else if(e >= 0){ //to idio kai sto e.to mionw kai tha paei pros ta panw afoy ksekinaei apo to e=y.
+				e--;
+				ctx.clearRect(z, e, 100, 50);
+			}
+			else { //reset ta panta
+				x=0;
+				y=0;
+				z=0;
+				e=0;
+			}
+			ctx.closePath(); //close path
+			ctx.fill(); //draw ston canvas
+			
+			loop();
+			
+		},1000/fps) //1000/80 frames per seconnd
+	}
+
+
+
+</script>
+
+</body>
+</html>

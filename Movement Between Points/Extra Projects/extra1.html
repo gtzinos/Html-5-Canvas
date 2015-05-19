@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script>
+	var c,canvas;
+	var fps=80; //set 80 fps
+	window.onload=function() { //on window load
+		canvas=document.getElementById("canvas"); //pernei ton canva
+		c=canvas.getContext("2d"); //pernei to meros pou zografizoume
+		
+		loop(); //kalei thn methodo loop
+	} 
+	//arxikopoihsh kai dilwsh public variables
+	var i=0;
+	var y=41;
+	var z=41;
+	var pt1=[40,40];
+	var pt2=[100,80];
+	
+	
+	function loop() {
+		setTimeout(function() { //anonymous class
+			i++; //proxoraw to vima i
+			c.clearRect(0,0,500,500); //katharizw arxika olo ton kamba
+			c.beginPath(); //dimiourgw h kanw reset ena path
+			c.fillStyle="#000"; //thetw style = mauro ston kiklo
+
+			if(i < 40) {  //gia oso to i<40 tote 
+				c.arc(pt1[0],pt1[1], 20, 0, Math.PI*2, true); //edw gia ligo kathete stiw sintetagmenes x=40 y=40 gia oso i < 40
+			}
+			else if(i < 300) { //epeita otan perasei to 40 tha arxisei na metakineitai me basei y=41 ++ z = 41 ++ opote paei diagwnia omala
+				c.arc(y,z, 20, 0, Math.PI*2,true);
+				y++;
+				z++;
+			}
+			else { //alliws reset kai pali to idio
+				i=0; 
+				y=41;
+				z=41;
+			}
+				
+			c.closePath(); //kleinoyme to path gia na ksana kanoyme neo meta
+			c.fill(); //kai zografizoume
+			
+			loop(); //ksanakaloume thn methodo mas
+			
+		},1000/fps) //1000/80 fps per second
+		
+	}
+
+</script>
+<title>Canvas Movement Between Points</title>
+</head>
+<body>
+<canvas id="canvas" width="500" height="500" >
+
+
+
+</body>
+
+</html>

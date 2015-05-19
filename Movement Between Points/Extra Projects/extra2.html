@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<canvas id="myCanvas" width="500" height="500" style="border:1px solid #d3d3d3;">
+Your browser does not support the HTML5 canvas tag.</canvas>
+
+<script>
+
+var c;
+var ctx;
+
+
+
+window.onload=function() {
+		c= document.getElementById("myCanvas"); //pernoyme ton kamba
+		ctx=c.getContext("2d"); //pernoyme to context diladi to simeio poy mporoume na zografisoume
+		
+		ctx.lineWidth = "5"; //thetoume perigrama paxos = 5 
+		ctx.strokeStyle = "green";  // Green path 
+		
+		loop(); //kalo thn sinartisi loop
+	}
+	var i=10; 
+	var x=-0;
+	function loop() { 
+		setTimeout(function() { //anonumous class
+			i++; //auksanw vima i
+			x++; //auksanw vima x
+			ctx.clearRect(0,0,500,500); //katharizw arxika ton kamva olokliro
+			ctx.beginPath(); //ftiaxnw ena path / reset ena palio
+			ctx.moveTo(x,x); //metafero tin grammh sto simeio 0,0 gia arxi kai epeita 1,1 2,2 οποτε παει ομαλα διαγωνια 
+			ctx.lineTo(i, i); //pianw thn grammh apo thn thesh i=10 gia arxi san klisi kai epeite to aristero i einai ousiastika to megethos
+			ctx.stroke();  // Draw it
+			
+			if(i == 500) { //an to sxima ousiastika ftasei sto telos tou sximatos tote reset ksana ao thn arxi
+				i = 10;
+				x = 0;
+			}
+			ctx.closePath(); //telos path
+			loop(); //ksanakalei ton eauto ths
+		},1000/80) //1000/80 frames per second
+	}
+
+
+</script>
+
+</body>
+</html>
