@@ -1,0 +1,104 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CH5EX2: Moving On A Simple Line</title>
+<script src="modernizr.js"></script>
+<script type="text/javascript">
+//variables
+   var speed; //speed
+   var p1; //simeio1
+   var p2;//simeio2
+   var dx;
+   var dy;
+   var distance;//teliki apostasi
+   var moves;//kiniseis pou apomenoun
+   var xunits;
+   var yunits;
+   var ball;//simeio mpalas
+   pointImage = new Image();
+	
+   
+   var pointImage;//afhmena simeia
+   
+   window.addEventListener('load', eventWindowLoaded, false); //molis ginei load i selidad kaloyme ti methodo gia na mporei na dei ton kamba
+	
+	function eventWindowLoaded() {
+		theCanvas = document.getElementById("canvasOne");//pernei to kamba
+		context = theCanvas.getContext("2d");//to periexomeno toy
+		startup();
+		gameLoop();//kai kaloume thn gameloop
+	}
+	function startup() { //reset all values
+		speed=5;
+		p1 = {x:20,y:250}; //simeio1
+		p2 = {x:480,y:250};//simeio2
+		dx = p2.x - p1.x;
+		dy = p2.y - p1.y;
+		distance = Math.sqrt(dx*dx + dy*dy);//teliki apostasi
+		moves = distance/speed;//kiniseis pou apomenoun
+		xunits = (p2.x - p1.x)/moves;
+		yunits = (p2.y - p1.y)/moves;
+		ball = {x:p1.x, y:p1.y};//simeio mpalas
+		points = new Array();//pinakas simeiwn
+		pointImage.src = "point.png";
+	}
+   
+   function gameLoop() {
+	if (!Modernizr.canvas) {
+         return;
+	 }
+     window.setTimeout(gameLoop, 120);
+     drawScreen();
+   }
+  function  drawScreen () {
+
+	
+      context.fillStyle = '#EEEEEE'; //vafei to back ground xroma tou kamba se #EEEEEE
+      context.fillRect(0, 0, theCanvas.width, theCanvas.height); //vafei olo to kamba .theCanvas.width, theCanvas.height
+      //Box
+      context.strokeStyle = '#000000'; //ftiaxnei ena perigramma apo ton kamba kai to bafei xroma mauro
+      context.strokeRect(1,  1, theCanvas.width-2, theCanvas.height-2); //pianei width-2 height-2 gia na exei kai ligo border
+
+      // Create ball
+
+      if (moves > 0 ) { //an exw kiniseis
+         moves--;//afairese mia
+         ball.x += xunits; //prosthese kinhsh
+         ball.y += yunits; //prosthese kinisi
+      }
+	  else {
+		startup();//reset values
+	  }
+
+      //Draw points to illustrate path
+
+      points.push({x:ball.x,y:ball.y}); //pinakas simeiwn pou perasame
+
+      for (var i = 0; i< points.length; i++) {
+         context.drawImage(pointImage, points[i].x, points[i].y,4,4); //show apotipomata 4x4 pixels
+
+      }
+
+      context.fillStyle = "#000000"; //vafo maurh thn mpala
+      context.beginPath();//ksekinaw ena path h kanw reset ena iparxon
+      context.arc(ball.x,ball.y,15,0,Math.PI*2,true); //sxediazw poy kai pws tha vgei o kiklos
+      context.closePath();//kleinw to path
+      context.fill();//zografizw to arc pou sxediasa
+
+   }
+
+
+   
+
+
+</script>
+</head>
+<body>
+<div style="position: absolute; top: 50px; left: 50px;">
+
+<canvas id="canvasOne" width="500" height="500">
+ Your browser does not support HTML5 Canvas.
+</canvas>
+</div>
+</body>
+</html>
